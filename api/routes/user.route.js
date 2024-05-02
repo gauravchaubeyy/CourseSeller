@@ -10,7 +10,7 @@ const {
 
 const router = express.Router();
 
-const SECRET = "SECr3t";
+const SECRET = "qwedsa";
 const authenticateJwt = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {

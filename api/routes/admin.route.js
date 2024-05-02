@@ -12,8 +12,10 @@ const router = express.Router();
 const SECRET = "SECr3t";
 const authenticateJwt = (req, res, next) => {
   const authHeader = req.headers.authorization;
+  console.log(authHeader)
   if (authHeader) {
     const token = authHeader.split(" ")[1];
+   
     jwt.verify(token, SECRET, (err, user) => {
       if (err) {
         return res.sendStatus(403);

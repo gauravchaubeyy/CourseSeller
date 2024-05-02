@@ -16,9 +16,9 @@ module.exports.UserSignup = async (req, res) => {
     const newUser = new User({ username, password });
     await newUser.save();
 
-    const token = jwt.sign({ username, role: "user" }, SECRET, {
-      expiresIn: "1h",
-    });
+    // const token = jwt.sign({ username, role: "user" }, SECRET, {
+    //   expiresIn: "1h",
+    // });
     res.json({ message: "User created successfully", token });
   } catch (error) {
     console.error("Error during user signup:", error);
@@ -29,8 +29,9 @@ module.exports.UserSignup = async (req, res) => {
 module.exports.UserLogin = async (req, res) => {
   try {
     const { username, password } = req.headers;
+  
     const user = await User.findOne({ username, password });
-
+     
     if (user) {
       const token = jwt.sign({ username, role: "user" }, SECRET, {
         expiresIn: "1h",
@@ -38,6 +39,7 @@ module.exports.UserLogin = async (req, res) => {
       res.json({ message: "Logged in successfully", token });
     } else {
       res.status(403).json({ message: "Invalid username or password" });
+      console.log("invalid reached...")
     }
   } catch (error) {
     console.error("Error during user login:", error);

@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const Admin = require("../models/admin.model.js");
 const Course = require("../models/course.model.js");
 
-const SECRET = "your-secret-key";
+const SECRET = "SECr3t";
 
 module.exports.adminSignup = async (req, res) => {
   const { username, password } = req.body;
