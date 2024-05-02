@@ -3,6 +3,7 @@ import Header from  "./components/Header";
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
+import Courses from "./components/Courses";
 
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path='/signin' element={<SignIn/>} />
         <Route path='/signup' element={<SignUp/>} />
+        <Route path='/explore'element={<Courses/>} />
       </Routes>
     </BrowserRouter>
   );

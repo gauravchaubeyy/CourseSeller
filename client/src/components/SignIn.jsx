@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+//import Courses from "./Courses";
 
 export default function SignIn() {
+ // const history = useHistory(); 
+ const navigate=useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: ""
@@ -37,7 +41,7 @@ export default function SignIn() {
   
       // Save the token to localStorage
       localStorage.setItem('token', token);
-  
+      navigate('/explore');
       //console.log('logged in successfully');
     } catch (error) {
       console.error('Error submitting form data:', error.message);
