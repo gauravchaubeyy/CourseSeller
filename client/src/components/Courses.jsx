@@ -44,7 +44,7 @@ const Courses = () => {
       {!courses.length && !isLoading ? ( // Only show button if courses are empty and not loading
         <button
           onClick={handleSubmit}
-          className="bg-black text-white p-2 font-bold rounded-lg hover:bg-slate-300 hover:text-black"
+          className="bg-black text-white p-60 font-bold rounded-lg hover:bg-slate-300 hover:text-black"
         >
           Explore
         </button>
@@ -56,7 +56,7 @@ const Courses = () => {
             {/* <h1 className="text-white text-lg font-semibold">
               Featured Courses
             </h1> */}
-            <div className="course-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-10 pl-28 gap-y-28">
+            <div className="course-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-40 pl-28 gap-y-28">
               {courses.map((course) => (
                 <Card key={course._id} course={course} />
               ))}
@@ -94,9 +94,9 @@ const Card = ({ course }) => {
               Published: {course.published ? "Yes" : "No"}
             </p>
           </div>
-          <button className="bg-violet-700 text-white 
-                             hover:bg-white hover:text-black
-                             rounded-lg shadow-lg p-2">
+          <button
+           className="hover:bg-red-700 text-red-700 hover:text-white px-4 py-2 rounded-lg shadow-md text-xl border border-red-700"
+          >
             Purchase
           </button>
         </div>

@@ -19,7 +19,7 @@ module.exports.UserSignup = async (req, res) => {
     // const token = jwt.sign({ username, role: "user" }, SECRET, {
     //   expiresIn: "1h",
     // });
-    res.json({ message: "User created successfully", token });
+    res.json({ message: "User created successfully" });
   } catch (error) {
     console.error("Error during user signup:", error);
     res.status(500).json({ message: "Internal Server Error" });

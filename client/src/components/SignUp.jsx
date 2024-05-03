@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+
 
 export default function SignUp() {
+  const navigate=useNavigate()
   const [formData,setFormData]=useState({
     username:"",
     password:""
@@ -44,6 +46,7 @@ export default function SignUp() {
       // } else {
       //   console.log('Token does not exist in localStorage');
       // }
+      navigate("/signin")
     } catch (error) {
       console.error('Error submitting form data:', error.message);
     }
@@ -51,7 +54,7 @@ export default function SignUp() {
   
 
   return (
-    <div className="flex flex-col container max-w-md mx-auto mt-8 p-20 bg-gray-100 rounded-md shadow-md">
+    <div className="flex flex-col container max-w-md mx-auto mt-40 p-20 bg-gray-100 rounded-md shadow-md">
       <h1 className="text-black text-2xl font-bold  mx-auto">SignUp</h1>
       <form onSubmit={handleSubmit} className="flex flex-col items-center"> 
       <input
