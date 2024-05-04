@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); 
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -39,26 +39,65 @@ const Courses = () => {
     }
   };
 
+  const handlePurchase = async (courseId) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("Token not found in localStorage");
+      }
+
+      const headers = new Headers();
+      headers.append("authorization", `Bearer ${token}`);
+
+      const response = await fetch(
+        `http://localhost:3000/api/user/users/courses/${courseId}`,
+        {
+          method: "POST",
+          headers: headers,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to purchase course");
+      }
+
+      // Update the purchased status locally
+      const updatedCourses = courses.map((course) => {
+        if (course._id === courseId) {
+          return { ...course, purchased: true };
+        }
+        return course;
+      });
+      setCourses(updatedCourses);
+
+      alert("Course purchased successfully!");
+    } catch (error) {
+      console.error("Error purchasing course:", error.message);
+      alert("Failed to purchase course. Please try again later.");
+    }
+  };
+
+  useEffect(() => {
+    handleSubmit(); // Fetch courses on component mount
+  }, []); 
+
   return (
     <>
-      {!courses.length && !isLoading ? ( // Only show button if courses are empty and not loading
-        <button
-          onClick={handleSubmit}
-          className="bg-black text-white p-60 font-bold rounded-lg hover:bg-slate-300 hover:text-black"
-        >
-          Explore
-        </button>
+      {!courses.length && !isLoading ? (
+        <p>No courses found.</p>
       ) : isLoading ? (
         <p>Loading courses...</p>
       ) : (
         <div className="bg-white min-h-screen">
           <div className="home-container">
-            {/* <h1 className="text-white text-lg font-semibold">
-              Featured Courses
-            </h1> */}
             <div className="course-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-40 pl-28 gap-y-28">
               {courses.map((course) => (
-                <Card key={course._id} course={course} />
+                <Card 
+                  key={course._id} 
+                  course={course} 
+                  onPurchase={() => handlePurchase(course._id)} // Pass the courseId to handlePurchase
+                />
               ))}
             </div>
           </div>
@@ -70,7 +109,8 @@ const Courses = () => {
 
 export default Courses;
 
-const Card = ({ course }) => {
+
+const Card = ({ course, onPurchase }) => {
   return (
     <div className="relative overflow-hidden max-w-sm rounded shadow-2xl">
       {/* Image */}
@@ -95,15 +135,22 @@ const Card = ({ course }) => {
             </p>
           </div>
           <button
-           className="hover:bg-red-700 text-red-700 hover:text-white px-4 py-2 rounded-lg shadow-md text-xl border border-red-700"
+            className={`px-4 py-2 rounded-lg text-xl ${
+              course.purchased
+                ? "bg-green-500 text-white"
+                : "hover:bg-red-700 text-red-700 hover:text-white border border-red-700"
+            }`}
+            onClick={!course.purchased ? onPurchase : null} // Call onPurchase function only if course is not purchased
+            disabled={course.purchased} // Disable the button if course is already purchased
           >
-            Purchase
+            {course.purchased ? "Purchased" : "Purchase"}
           </button>
         </div>
       </div>
     </div>
   );
 };
+
 
 {
   /* <div>
@@ -117,3 +164,6 @@ const Card = ({ course }) => {
   </ul>
 </div> */
 }
+
+
+

@@ -1,21 +1,45 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Header from  "./components/Header";
-import Home from "./components/Home";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
-import Courses from "./components/Courses";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './userComponents/Header';
+import Home from './userComponents/Home';
+import SignIn from './userComponents/SignIn';
+import SignUp from './userComponents/SignUp';
+import Courses from './userComponents/Courses';
+import Header2 from './userComponents/Header2';
+import Profile from './userComponents/Profile';
 
-
-export default function App() {
+function Layout({ children }) {
   return (
-    <BrowserRouter>
-      <Header />  
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path='/signin' element={<SignIn/>} />
-        <Route path='/signup' element={<SignUp/>} />
-        <Route path='/explore'element={<Courses/>} />
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <Header />
+      {children}
+    </div>
   );
 }
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout><Home /></Layout>} />
+        <Route path="/signin" element={<Layout><SignIn /></Layout>} />
+        <Route path="/signup" element={<Layout><SignUp /></Layout>} />
+        <Route path="/explore/*" element={<Explore />} />
+        <Route path='/profile' element={<Profile />} />
+      </Routes>
+    </Router>
+  );
+}
+
+function Explore() {
+  return (
+    <div>
+      <Header2 />
+      <Courses />
+    </div>
+  );
+}
+
+export default App;
+
+

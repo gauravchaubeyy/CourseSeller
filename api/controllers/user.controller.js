@@ -36,7 +36,7 @@ module.exports.UserLogin = async (req, res) => {
       const token = jwt.sign({ username, role: "user" }, SECRET, {
         expiresIn: "1h",
       });
-      res.json({ message: "Logged in successfully", token });
+      res.json({ message: "Logged in successfully", token, username});
     } else {
       res.status(403).json({ message: "Invalid username or password" });
       console.log("invalid reached...")
