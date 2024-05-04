@@ -44,7 +44,7 @@ const Profile = () => {
 
   return (
     <div>
-      <h1 className='font-bold text-4xl text-white bg-black p-8 mb-4'>Welcome, {username}</h1>
+      <h1 className='font-bold text-4xl text-white bg-black p-6 mb-4'>Welcome, {username}</h1>
       {isLoading ? (
         <p>Loading purchased courses...</p>
       ) : (
