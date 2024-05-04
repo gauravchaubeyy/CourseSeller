@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors"); 
-
+const path =require("path")
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -34,8 +34,16 @@ mongoose
     process.exit(1); // Exit on connection error
   });
 
+  const __dirname = path.resolve();
+
 app.use("/api/user", userRouter);
 app.use("/api/auth", adminRouter);
+
+app.use(express.static(path.join(__dirname,"/client/dist")));
+
+app.get("*",(req,res)=>{
+  res.sendFile(path.join(__dirname + "client"+"dist"+"index.html"));
+})
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000!");
