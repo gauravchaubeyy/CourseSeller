@@ -10,7 +10,7 @@ const adminRouter = require("./routes/admin.route.js");
 
 const app = express();
 
-
+const __dirname = path.resolve()
 
 // Enable CORS for all origins (adjust as needed)
 app.use(cors());
@@ -34,7 +34,7 @@ mongoose
     process.exit(1); // Exit on connection error
   });
 
-  const __dirname = path.resolve();
+  // const __dirname = path.resolve();
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", adminRouter);
