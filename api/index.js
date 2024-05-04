@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors"); 
-const path =require("path")
+const cors = require("cors");
+const path = require("path");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -9,8 +9,6 @@ const userRouter = require("./routes/user.route.js");
 const adminRouter = require("./routes/admin.route.js");
 
 const app = express();
-
-
 
 // Enable CORS for all origins (adjust as needed)
 app.use(cors());
@@ -34,16 +32,16 @@ mongoose
     process.exit(1); // Exit on connection error
   });
 
-  const __dirname = path.resolve();
+// Remove the line defining __dirname
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", adminRouter);
 
-app.use(express.static(path.join(__dirname,"/client/dist")));
+app.use(express.static(path.join(__dirname, "client/dist")));
 
-app.get("*",(req,res)=>{
-  res.sendFile(path.join(__dirname + "client"+"dist"+"index.html"));
-})
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000!");
